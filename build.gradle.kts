@@ -9,6 +9,10 @@ val PROJECT_VERSION = "1.0"
 group = PROJECT_GROUP
 version = PROJECT_VERSION
 
+repositories {
+    mavenCentral()
+}
+
 kotlin {
     jvm {
         jvmToolchain(8)
