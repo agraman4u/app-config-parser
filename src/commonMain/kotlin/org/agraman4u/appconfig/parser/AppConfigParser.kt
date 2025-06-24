@@ -8,12 +8,12 @@ import org.agraman4u.appconfig.utils.isWildCard
 import org.agraman4u.appconfig.utils.isWildCardOrVal
 import org.agraman4u.appconfig.utils.listFiles
 import org.agraman4u.appconfig.utils.readConfigFile
-import kotlinx.io.files.Path
-
+import okio.Path
+import okio.Path.Companion.toPath
 
 internal class AppConfigParser(private val configurationArgs: AppConfigurationArgs) : Parser {
     companion object {
-        private val ROOT_CONFIG_DIR = Path(getProperty("user.dir"), "configuration", "app-config")
+        private val ROOT_CONFIG_DIR = "${getProperty("user.dir")}/configuration/app-config"
         private val CONFIG_ENTRY_PROPERTY_REGEX = """\s*\"(\w+)\"\s*:\s*\"([^\"]+)\"\s*""".toRegex()
         private val CONFIG_REGEX = """^(\w+|\*)\.(\w+|\*)\.(\w+|\*)\s*\+=\s*\{(.+)}$""".toRegex()
     }
@@ -23,8 +23,9 @@ internal class AppConfigParser(private val configurationArgs: AppConfigurationAr
 
     init {
         val matcher = Regex(".*\\.${configurationArgs.serviceName}\\.conf")
-        val filteredFiles = listFiles(ROOT_CONFIG_DIR).filter { matcher.matches(it.name) }
-        configFiles = filteredFiles
+        val configDir = (configurationArgs.configDir ?: ROOT_CONFIG_DIR).toPath()
+        val filteredFiles = listFiles(configDir)
+        configFiles = filteredFiles.filter { matcher.matches(it.name) }
         values = parse()
     }
 
@@ -79,7 +80,8 @@ internal class AppConfigParser(private val configurationArgs: AppConfigurationAr
 
         specificEntries.forEach { updateAppConfig(it) }
 
-        entries.filter { !it.stage.isWildCard() && !it.region.isWildCard() }.forEach { updateAppConfig(it) }
+        entries.filter { !it.stage.isWildCard() && !it.region.isWildCard() }
+            .forEach { updateAppConfig(it) }
 
         return appConfigMap
     }

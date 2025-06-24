@@ -1,20 +1,22 @@
 package org.agraman4u.appconfig.utils
 
-import kotlinx.io.files.Path
+import kotlinx.cinterop.ExperimentalForeignApi
+import okio.Path
+import okio.FileSystem
+import platform.posix.getenv
+import kotlinx.cinterop.toKString
 
-actual fun getProperty(): Map<String, String> {
-    TODO("Not yet implemented")
-}
 
+@OptIn(ExperimentalForeignApi::class)
 actual fun getProperty(key: String): String {
-    TODO("Not yet implemented")
+    return getenv(key)?.toKString()!!
 }
 
 
 actual fun listFiles(path: Path): List<Path> {
-    TODO("Not yet implemented")
+    return FileSystem.SYSTEM.list(path)
 }
 
-actual fun readConfigFile(path: Path): List<String> {
-    TODO("Not yet implemented")
+actual fun readFile(path: Path): List<String> {
+    return FileSystem.SYSTEM.read(path, { readUtf8().lines() })
 }

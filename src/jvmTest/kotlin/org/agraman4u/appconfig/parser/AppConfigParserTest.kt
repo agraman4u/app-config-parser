@@ -10,7 +10,6 @@ class AppConfigParserTest {
         AppConfig.initAppConfig("AppConfigTest", "prod", "EastUs1")
         assertEquals("hello world prod.EastUs1", AppConfig.get<String>("databaseDriverConfig", "name"))
 
-
         AppConfig.initAppConfig("AppConfigTest", "prod", "WestUs2")
         assertEquals("hello world prod west us", AppConfig.get<String>("databaseDriverConfig", "name"))
 

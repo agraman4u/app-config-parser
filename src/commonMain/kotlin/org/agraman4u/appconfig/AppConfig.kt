@@ -3,24 +3,22 @@ package org.agraman4u.appconfig
 import org.agraman4u.appconfig.parser.AppConfigParser
 import org.agraman4u.appconfig.parser.Parser
 import org.agraman4u.appconfig.utils.AppConfigurationArgs
-import org.agraman4u.appconfig.utils.getProperty
 import org.agraman4u.appconfig.utils.getRegion
 import org.agraman4u.appconfig.utils.getStage
-import kotlin.native.concurrent.ThreadLocal
 
 class AppConfig private constructor(args: AppConfigurationArgs) {
     val parser: Parser = AppConfigParser(args)
 
-    @ThreadLocal
     companion object {
-        private val properties = getProperty()
         lateinit var appConfig: AppConfig
+
         fun initAppConfig(
             serviceName: String,
-            stage: String = properties.getStage(),
-            region: String = properties.getRegion(),
+            stage: String = getStage(),
+            region: String = getRegion(),
+            configDir: String? = null
         ) {
-            appConfig = AppConfig(AppConfigurationArgs(stage, region, serviceName))
+            appConfig = AppConfig(AppConfigurationArgs(stage, region, serviceName, configDir))
         }
 
         inline fun <reified T> get(identifier: String, key: String): T {

@@ -1,11 +1,15 @@
 package org.agraman4u.appconfig.utils
 
-import kotlinx.io.files.Path
+import okio.Path
+import okio.NodeJsFileSystem
+
+import okio.buffer
+import okio.use
 
 internal actual fun listFiles(path: Path): List<Path> {
-    TODO("Not yet implemented")
+    return NodeJsFileSystem.list(path)
 }
 
-internal actual fun readConfigFile(path: Path): List<String> {
-    TODO("Not yet implemented")
+internal actual fun readFile(path: Path): List<String> {
+    return NodeJsFileSystem.source(path).buffer().use { it.readUtf8().lines() }
 }
