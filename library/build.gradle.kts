@@ -75,7 +75,7 @@ android {
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
 
-//    signAllPublications()
+    signAllPublications()
 
     coordinates(group.toString(), "app-config-parser", version.toString())
 
