@@ -13,6 +13,15 @@ version = "1.0.0"
 
 kotlin {
     jvm()
+    js {
+        browser {
+            commonWebpackConfig {
+                cssSupport {
+                    enabled.set(true)
+                }
+            }
+        }
+    }
     androidTarget {
         publishLibraryVariants("release")
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -27,20 +36,32 @@ kotlin {
 
     sourceSets {
         val commonMain by getting {
+            resources.srcDir("configuration")
             dependencies {
                 //put your multiplatform dependencies here
+                implementation(libs.kotlinx.io.core)
+                implementation(libs.okio)
             }
         }
+
         val commonTest by getting {
             dependencies {
                 implementation(libs.kotlin.test)
+
             }
         }
+        val jsMain by getting
+        val jsTest by getting
     }
 }
 
 android {
-    namespace = "org.jetbrains.kotlinx.multiplatform.library.template"
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("/Volumes/workplace/app-config-parser/key.gpg")
+        }
+    }
+    namespace = "io.github.agraman4u.appconfig"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -54,9 +75,9 @@ android {
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
 
-    signAllPublications()
+//    signAllPublications()
 
-    coordinates(group.toString(), "library", version.toString())
+    coordinates(group.toString(), "app-config-parser", version.toString())
 
     pom {
         name = "App Config Parser"
