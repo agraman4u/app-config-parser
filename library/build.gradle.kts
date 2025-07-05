@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.vanniktech.mavenPublish)
 }
 
-group = "io.github.kotlin"
+group = "io.github.agraman4u"
 version = "1.0.0"
 
 kotlin {
@@ -59,28 +59,28 @@ mavenPublishing {
     coordinates(group.toString(), "library", version.toString())
 
     pom {
-        name = "My library"
-        description = "A library."
-        inceptionYear = "2024"
-        url = "https://github.com/kotlin/multiplatform-library-template/"
+        name = "App Config Parser"
+        description = "A library to dynamically parse multi stage and multi region level configuration mappings"
+        inceptionYear = "2025"
+        url = "https://github.com/agraman4u/app-config-parser"
         licenses {
             license {
-                name = "XXX"
-                url = "YYY"
-                distribution = "ZZZ"
+                name = "The MIT License"
+                url = "https://opensource.org/licenses/MIT"
+                distribution = "repo"
             }
         }
         developers {
             developer {
-                id = "XXX"
-                name = "YYY"
-                url = "ZZZ"
+                id = "agraman4u"
+                name = "Aman Agrawal"
+                url = "https://github.com/agraman4u"
             }
         }
         scm {
-            url = "XXX"
-            connection = "YYY"
-            developerConnection = "ZZZ"
+            url = "https://github.com/agraman4u/app-config-parser"
+            connection = "scm:git:https://github.com/agraman4u/app-config-parser.git"
+            developerConnection = "scm:git:git@github.com:agraman4u/app-config-parser.git"
         }
     }
 }
