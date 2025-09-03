@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "app-config-parser"
+version = "1.0.0"
+description = "A centralized multi-stage and multi-region configuration parser using wildcard entries"
+authors = ["agraman4u <agraman4u@example.com>"]
+readme = "README.md"
+packages = [{include = "app_config_parser", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
